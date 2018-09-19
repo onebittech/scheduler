@@ -4,9 +4,6 @@ package scheduler
 import (
 	"fmt"
 	"log"
-	"os"
-	"os/signal"
-	"syscall"
 	"time"
 
 	"github.com/rakanalh/scheduler/storage"
@@ -76,9 +73,6 @@ func (scheduler *Scheduler) RunEvery(duration time.Duration, function task.Funct
 // Start will run the scheduler's timer and will trigger the execution
 // of tasks depending on their schedule.
 func (scheduler *Scheduler) Start() error {
-	sigChan := make(chan os.Signal, 1)
-	signal.Notify(sigChan, syscall.SIGINT, syscall.SIGTERM)
-
 	// Populate tasks from storage
 	if err := scheduler.populateTasks(); err != nil {
 		return err
@@ -94,10 +88,9 @@ func (scheduler *Scheduler) Start() error {
 			select {
 			case <-ticker.C:
 				scheduler.runPending()
-			case <-sigChan:
-				scheduler.stopChan <- true
 			case <-scheduler.stopChan:
 				close(scheduler.stopChan)
+				return
 			}
 		}
 	}()
