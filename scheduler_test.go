@@ -4,8 +4,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/rakanalh/scheduler/storage"
-	"github.com/rakanalh/scheduler/task"
+	"github.com/sdvallejo/scheduler/storage"
+	"github.com/sdvallejo/scheduler/task"
 )
 
 const TestTaskName = "github.com/rakanalh/scheduler/task.(*CallbackMock).CallNoArgs-fm"
