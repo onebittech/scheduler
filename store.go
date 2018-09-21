@@ -53,7 +53,8 @@ func (sb *storeBridge) Fetch() ([]*task.Task, error) {
 
 		funcMeta, err := sb.funcRegistry.Get(storedTask.Name)
 		if err != nil {
-			return nil, err
+			sb.store.Remove(storedTask)
+			continue
 		}
 
 		params, err := paramsFromString(funcMeta, storedTask.Params)
