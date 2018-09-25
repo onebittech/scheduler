@@ -185,6 +185,12 @@ func (scheduler *Scheduler) populateTasks() error {
 	return nil
 }
 
+func (scheduler *Scheduler) IsPending(function interface{}) bool {
+	tf := task.Function(function)
+	_, exists := scheduler.taskExists(tf)
+	return exists
+}
+
 func (scheduler *Scheduler) persistRegisteredTasks() error {
 	for _, task := range scheduler.tasks {
 		err := scheduler.taskStore.Add(task)
