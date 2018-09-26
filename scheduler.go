@@ -42,6 +42,12 @@ func (scheduler *Scheduler) RegisterFunction(function task.Function) error {
 
 // RunAt will schedule function to be executed once at the given time.
 func (scheduler *Scheduler) RunAt(time time.Time, function task.Function, params ...task.Param) (task.ID, error) {
+	t, exists := scheduler.taskExists(function)
+	if exists {
+		t.NextRun = time
+		return t.Hash(), nil
+	}
+
 	funcMeta, err := scheduler.funcRegistry.Add(function)
 	if err != nil {
 		return "", err
@@ -212,7 +218,7 @@ func (scheduler *Scheduler) runPending() {
 func (scheduler *Scheduler) runTask(task *task.Task) {
 	task.Run()
 
-	if !task.IsRecurring {
+	if !task.IsRecurring && task.NextRun.Before(time.Now()) {
 		scheduler.removeTask(task)
 	}
 
