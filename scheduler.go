@@ -216,6 +216,10 @@ func (scheduler *Scheduler) runPending() {
 }
 
 func (scheduler *Scheduler) runTask(task *task.Task) {
+	if task.IsRunning {
+		return
+	}
+
 	task.Run()
 
 	if !task.IsRecurring && task.NextRun.Before(time.Now()) {

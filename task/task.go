@@ -22,24 +22,27 @@ type Schedule struct {
 // Task holds information about task
 type Task struct {
 	Schedule
-	Func   FunctionMeta
-	Params []Param
+	Func      FunctionMeta
+	IsRunning bool
+	Params    []Param
 }
 
 // New returns an instance of task
 func New(function FunctionMeta, params []Param) *Task {
 	return &Task{
-		Func:   function,
-		Params: params,
+		Func:      function,
+		Params:    params,
+		IsRunning: false,
 	}
 }
 
 // NewWithSchedule creates an instance of task with the provided schedule information
 func NewWithSchedule(function FunctionMeta, params []Param, schedule Schedule) *Task {
 	return &Task{
-		Func:     function,
-		Params:   params,
-		Schedule: schedule,
+		Func:      function,
+		Params:    params,
+		Schedule:  schedule,
+		IsRunning: false,
 	}
 }
 
@@ -51,6 +54,8 @@ func (task *Task) IsDue() bool {
 
 // Run will execute the task and schedule it's next run.
 func (task *Task) Run() {
+	task.IsRunning = true
+	defer func() { task.IsRunning = false }()
 	// Reschedule task first to prevent running the task
 	// again in case the execution time takes more than the
 	// task's duration value.
