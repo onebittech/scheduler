@@ -84,6 +84,6 @@ func (task *Task) scheduleNextRun() {
 		return
 	}
 
-	task.LastRun = task.NextRun
+	task.LastRun = time.Now()
 	task.NextRun = time.Now().Add(task.Duration)
 }
