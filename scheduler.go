@@ -175,8 +175,6 @@ func (scheduler *Scheduler) populateTasks() error {
 		// be added to the list of tasks to be executed with the stored params
 		registeredTask, ok := scheduler.tasks[dbTask.Hash()]
 		if !ok {
-			log.Printf("Detected a change in attributes of one of the instances of task %s, \n",
-				dbTask.Func.Name)
 			dbTask.Func, _ = scheduler.funcRegistry.Get(dbTask.Func.Name)
 			registeredTask = dbTask
 			scheduler.tasks[dbTask.Hash()] = registeredTask
