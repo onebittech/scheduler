@@ -8,8 +8,8 @@ import (
 	"runtime"
 	"time"
 
-	"github.com/sdvallejo/scheduler/storage"
-	"github.com/sdvallejo/scheduler/task"
+	"scheduler/storage"
+	"scheduler/task"
 )
 
 // Scheduler is used to schedule tasks. It holds information about those tasks
