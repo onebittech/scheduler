@@ -1,4 +1,4 @@
-module scheduler
+module github.com/onebittech/scheduler
 
 go 1.16
 

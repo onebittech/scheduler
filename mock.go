@@ -3,7 +3,7 @@ package scheduler
 import (
 	"fmt"
 
-	"scheduler/storage"
+	"github.com/onebittech/scheduler/storage"
 )
 
 type failureMode int

@@ -8,8 +8,8 @@ import (
 	"runtime"
 	"time"
 
-	"scheduler/storage"
-	"scheduler/task"
+	"github.com/onebittech/scheduler/storage"
+	"github.com/onebittech/scheduler/task"
 )
 
 // Scheduler is used to schedule tasks. It holds information about those tasks
